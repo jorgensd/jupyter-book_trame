@@ -25,24 +25,24 @@ jobs:
       DEB_PYTHON_INSTALL_LAYOUT: deb_system
       PYVISTA_TRAME_SERVER_PROXY_PREFIX: '/proxy/'
       PYVISTA_TRAME_SERVER_PROXY_ENABLED: "True"
-
+      PYVISTA_JUPYTER_BACKEND: ${{ matrix.backend }}
     steps:
       - uses: actions/checkout@v3
 
       - name: Install apt dependencies and upgrade pip
-        run: |
+        run: 
           apt-get update && apt-get install -y python3-pip git libgl1-mesa-glx libxrender1 xvfb
 
       - name: Install python requirements
-        run: |
+        run: 
           python3 -m pip --no-cache-dir install -r requirements.txt --upgrade
 
       - name: Build the book
         run: 
-          PYVISTA_JUPYTER_BACKEND=${{ matrix.backend }} jupyter-book build .
+          jupyter-book build .
 
       - name: Upload book
         uses: actions/upload-artifact@v3
         with:
-          name: book${{ matrix.backend }}
+          name: book${{ env.PYVISTA_JUPYTER_BACKEND }}
           path: _build/html
