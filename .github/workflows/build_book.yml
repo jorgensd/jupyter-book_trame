@@ -11,21 +11,23 @@ env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   
-  matrix:
-        backend: ["panel", "trame"]
-
-  test:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-    container: ubuntu:22.04
-    env:
+  strategy:  
+    matrix:
+      backend: ["panel", "trame"]
+  
+   env:
       PYVISTA_OFF_SCREEN: false
       DEB_PYTHON_INSTALL_LAYOUT: deb_system
       PYVISTA_TRAME_SERVER_PROXY_PREFIX: '/proxy/'
       PYVISTA_TRAME_SERVER_PROXY_ENABLED: "True"
       PYVISTA_JUPYTER_BACKEND: ${{ matrix.backend }}
+
+  build-book:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    container: ubuntu:22.04
+   
     steps:
       - uses: actions/checkout@v3
 
