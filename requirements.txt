@@ -1,0 +1,5 @@
+jupyterlab>=3
+jupyter-book[sphinx] @ git+https://github.com/executablebooks/jupyter-book@master
+pyvista[all,jupyter,trame] @ git+https://github.com/pyvista/pyvista@main
+jupyter
+matplotlib 
