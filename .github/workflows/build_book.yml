@@ -46,6 +46,11 @@ jobs:
         run: 
           jupyter-book build .
 
+      - name: Print report of pyvista to artifact
+        run: 
+          python3 -c "import pyvista; print(pyvista.Report())" >> _build/html/pvreport.txt
+
+
       - name: Upload book
         uses: actions/upload-artifact@v3
         with:
